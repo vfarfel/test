@@ -1,0 +1,25 @@
+{
+  "schemaVersion" : 0.1.0,
+  "name": "AdvancedPackage",
+  "workingVersion": "0.1.0",
+  "id": "d35c90c7-204b-49d9-b84a-1429c0045a9f",
+  "summary": "An advanced package that with a public interface, a private interface, and a dependency",
+  "releaseCompatibility": ">=R2023a",
+  "dependencies": [
+    {
+      "name": "RandomDataGenerationAlgorithms",
+      "id": "f64c675a-8cf9-4b3c-9e30-d190d984b427",
+      "compatibleVersions": ""
+    }
+  ],
+  "description": "This is an example of an advanced package that defines a public app, private functions, and leverages algorithms from a dependency.",
+  "sourceUrl": "",
+  "publicFolders": [
+    "apps"
+  ],
+  "privateFolders": [
+    "images",
+    "helperFunctions",
+    "classes"
+  ]
+}
