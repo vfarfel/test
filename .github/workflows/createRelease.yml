@@ -8,12 +8,12 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Extract version from package.json
       id: get_version
       run: |
-        version=$(node -p "require('./package.json').version")
+        version=$(grep -o '"version": "[^"]*"' package.json | cut -d'"' -f4)
         echo "version=${version}" >> $GITHUB_STATE
 
     - name: Check if release tag exists
