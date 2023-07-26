@@ -20,7 +20,7 @@ jobs:
       id: check_tag
       run: |
         git fetch --tags
-        if git rev-parse --quiet --verify "refs/tags/v${{ env.GITHUB_STATE_version }}" >/dev/null; then
+        if git rev-parse --quiet --verify "refs/tags/v${{ env.GITHUB_STATE.version }}" >/dev/null; then
           echo "{tag_exists}={true}" >> $GITHUB_STATE
         else
           echo "{tag_exists}={false}" >> $GITHUB_STATE
