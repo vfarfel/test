@@ -14,16 +14,16 @@ jobs:
       id: get_version
       run: |
         version=$(grep -o '"version": "[^"]*"' mpackage.json | cut -d'"' -f4)
-        echo "version=${version}" >> $GITHUB_STATE
+        echo "{version}={version}" >> $GITHUB_STATE
 
     - name: Check if release tag exists
       id: check_tag
       run: |
         git fetch --tags
         if git rev-parse --quiet --verify "refs/tags/v${{ env.GITHUB_STATE_version }}" >/dev/null; then
-          echo "::set-output name=tag_exists::true" >> $GITHUB_OUTPUT
+          echo "{name}={tag_exists::true}" >> $GITHUB_OUTPUT
         else
-          echo "::set-output name=tag_exists::false" >> $GITHUB_OUTPUT
+          echo "{name}={tag_exists::false}" >> $GITHUB_OUTPUT
         fi
 
     - name: Create release
