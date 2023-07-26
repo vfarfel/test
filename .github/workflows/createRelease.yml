@@ -1,6 +1,9 @@
 name: Create Release
 
-on: workflow_dispatch
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   create_release:
@@ -8,12 +11,12 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Extract version from mpackage.json
       id: get_version
       run: |
-        version=$(jq -r .version mpackage.json)
+        version=$(jq -r ".version" mpackage.json)
         echo "::set-output name=version::$version"
 
     - name: Check if release tag exists
