@@ -13,7 +13,7 @@ jobs:
     - name: Extract version from package.json
       id: get_version
       run: |
-        version=$(grep -o '"version": "[^"]*"' package.json | cut -d'"' -f4)
+        version=$(grep -o '"version": "[^"]*"' mpackage.json | cut -d'"' -f4)
         echo "version=${version}" >> $GITHUB_STATE
 
     - name: Check if release tag exists
