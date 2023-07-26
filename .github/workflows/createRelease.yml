@@ -8,29 +8,30 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v2
 
-    - name: Extract version from mpackage.json
+    - name: Extract version from package.json
       id: get_version
       run: |
-        version=$(grep -o '"version": "[^"]*"' package.json | cut -d'"' -f4)
-        echo "::set-output name=version::$version"
+        version=$(node -p "require('./package.json').version")
+        echo "version=${version}" >> $GITHUB_STATE
 
     - name: Check if release tag exists
       id: check_tag
       run: |
         git fetch --tags
-        if git rev-parse "refs/tags/v${{ steps.get_version.outputs.version }}" >/dev/null 2>&1; then
-          echo "::set-output name=tag_exists::true"
+        if git rev-parse --quiet --verify "refs/tags/v${{ env.GITHUB_STATE_version }}" >/dev/null; then
+          echo "::set-output name=tag_exists::true" >> $GITHUB_OUTPUT
         else
-          echo "::set-output name=tag_exists::false"
+          echo "::set-output name=tag_exists::false" >> $GITHUB_OUTPUT
         fi
 
     - name: Create release
       id: create_release
-      if: steps.check_tag.outputs.tag_exists == 'false'
+      if: env.GITHUB_OUTPUT_tag_exists == 'false'
       run: |
         git config --global user.name "GitHub Actions"
         git config --global user.email "actions@github.com"
-        git tag -a "v${{ steps.get_version.outputs.version }}" -m "Release v${{ steps.get_version.outputs.version }}"
-        git push origin "v${{ steps.get_version.outputs.version }}"
+        git tag -a "v${{ env.GITHUB_STATE_version }}" -m "Release v${{ env.GITHUB_STATE_version }}"
+        git push origin "v${{ env.GITHUB_STATE_version }}"
+        
