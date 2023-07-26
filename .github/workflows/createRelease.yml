@@ -14,7 +14,7 @@ jobs:
       id: get_version
       run: |
         version=$(grep -o '"version": "[^"]*"' mpackage.json | cut -d'"' -f4)
-        echo "{version}={version}" >> $GITHUB_STATE
+        echo "{version}={version}" >> $GITHUB_OUTPUT
 
     - name: Check if release tag exists
       id: check_tag
