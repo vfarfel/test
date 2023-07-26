@@ -25,6 +25,7 @@ jobs:
         else
           echo "{tag_exists}={false}" >> $GITHUB_STATE
         fi
+        echo "{tag_exists}={env.GITHUB_STATE.tag_exists}" >> $GITHUB_OUTPUT
 
     - name: Create release
       id: create_release
@@ -32,6 +33,6 @@ jobs:
       run: |
         git config --global user.name "GitHub Actions"
         git config --global user.email "actions@github.com"
-        git tag -a "v${{ env.GITHUB_STATE_version }}" -m "Release v${{ env.GITHUB_STATE_version }}"
-        git push origin "v${{ env.GITHUB_STATE_version }}"
+        git tag -a "v${{ env.GITHUB_STATE.version }}" -m "Release v${{ env.GITHUB_STATE.version }}"
+        git push origin "v${{ env.GITHUB_STATE.version }}"
         
