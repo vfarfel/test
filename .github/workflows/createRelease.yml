@@ -45,4 +45,3 @@ jobs:
     - name: Output release URL
       if: steps.create_release.outputs.id != ''
       run: echo "Release created: https://github.com/${{ github.repository }}/releases/tag/v${{ steps.get_version.outputs.version }}"
-      
