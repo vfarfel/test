@@ -27,12 +27,25 @@ jobs:
         fi
 
     - name: Create release
-      id: create_release
+      id: create_release_tag
       if: env.tag_exists == 'false'
       run: |
         echo "Creating new release: ${{ env.version }} "
         git config --global user.name "GitHub Actions"
         git config --global user.email "actions@github.com"
-        git tag -a "v${{ env.version }}" -m "Release v${{ env.version }}"
+        git tag -a "v${{ env.version }}" -m "Release ${{ env.version }}"
         git push origin "v${{ env.version }}"
-        
+
+    - name: Create Release
+      id: create_release
+      if: env.tag_exists == 'false'
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      with:
+        tag_name: ${{ env.version }}
+        release_name: Release ${{ env.version }}
+        body: |
+          Version ${{ env.version }}
+        draft: false
+        prerelease: false
