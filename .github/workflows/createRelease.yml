@@ -25,13 +25,13 @@ jobs:
         else
           echo "tag_exists=false" >> "$GITHUB_ENV"
         fi
-        echo "exists=$env.tag_exists"
+        echo "exists=${{env.tag_exists}}"
 
     - name: Create release
       id: create_release
       if: env.tag_exists == 'false'
       run: |
-        echo "Creating new release: $env.version "
+        echo "Creating new release: ${{ env.version }} "
         git config --global user.name "GitHub Actions"
         git config --global user.email "actions@github.com"
         git tag -a "v${{ env.version }}" -m "Release v${{ env.version }}"
