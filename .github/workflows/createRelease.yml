@@ -20,7 +20,8 @@ jobs:
       id: check_tag
       run: |
         git fetch --tags
-        if git show-ref --tags --quiet --verify "refs/tags/${ env.GITHUB_STATE.version }" >/dev/null; then
+        echo "version=$version" 
+        if git show-ref --tags --quiet --verify "refs/tags/${version}"; then
           echo "Old" 
           env.GITHUB_STATE.tag_exists = 'true'
         else
