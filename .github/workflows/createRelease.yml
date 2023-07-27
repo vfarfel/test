@@ -25,7 +25,6 @@ jobs:
         else
           echo "tag_exists=false" >> "$GITHUB_ENV"
         fi
-        echo "exists=${{env.tag_exists}}"
 
     - name: Create release
       id: create_release
