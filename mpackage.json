@@ -4,7 +4,7 @@
   "version": "1.0.3",
   "id": "d35c90c7-204b-49d9-b84a-1429c0045a9f",
   "summary": "An advanced package that with a public interface, a private interface, and a dependency",
-  "releaseCompatibility": ">=R2023a",
+  "releaseCompatibility": ">=R2023b",
   "dependencies": [
     {
       "name": "RandomDataGenerationAlgorithms",
