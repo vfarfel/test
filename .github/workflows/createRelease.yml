@@ -10,7 +10,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Extract version from package.json
+    - name: Extract version from mpackage.json
       id: get_version
       run: |
         version=$(grep -o '"version": "[^"]*"' mpackage.json | cut -d'"' -f4)
@@ -25,7 +25,6 @@ jobs:
         else
           echo "{tag_exists}={false}" >> $GITHUB_STATE
         fi
-        echo "{tag_exists}={env.GITHUB_STATE.tag_exists}" >> $GITHUB_OUTPUT
 
     - name: Create release
       id: create_release
