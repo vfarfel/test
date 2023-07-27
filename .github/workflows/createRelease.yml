@@ -20,11 +20,14 @@ jobs:
       id: check_tag
       run: |
         git fetch --tags
-        if git rev-parse --quiet --verify "refs/tags/v${{ env.GITHUB_STATE.version }}" >/dev/null; then
-          echo "{tag_exists}={true}" 
+        if git show-ref --tags --quiet --verify "refs/tags/${ env.GITHUB_STATE.version }" >/dev/null; then
+          echo "Old" 
+          env.GITHUB_STATE.tag_exists = 'true'
         else
-          echo "{tag_exists}={false}"
+          echo "New"
+          env.GITHUB_STATE.tag_exists = 'false'
         fi
+        echo "exists=$env.GITHUB_STATE.tag_exists"
 
     - name: Create release
       id: create_release
