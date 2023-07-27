@@ -14,28 +14,25 @@ jobs:
       id: get_version
       run: |
         version=$(grep -o '"version": "[^"]*"' mpackage.json | cut -d'"' -f4)
-        echo "version=$version" 
+        echo "version=$version" >> "$GITHUB_ENV"
 
     - name: Check if release tag exists
       id: check_tag
       run: |
         git fetch --tags
-        echo "version=$version" 
-        if git show-ref --tags --quiet --verify "refs/tags/${version}"; then
-          echo "Old" 
-          env.GITHUB_STATE.tag_exists = 'true'
+        if git show-ref --tags --quiet --verify "refs/tags/${{ env.version }}"; then
+          echo "tag_exists=true" >> "$GITHUB_ENV"
         else
-          echo "New"
-          env.GITHUB_STATE.tag_exists = 'false'
+          echo "tag_exists=false" >> "$GITHUB_ENV"
         fi
         echo "exists=$env.GITHUB_STATE.tag_exists"
 
     - name: Create release
       id: create_release
-      if: env.GITHUB_STATE.tag_exists == 'false'
+      if: env.tag_exists == 'false'
       run: |
         git config --global user.name "GitHub Actions"
         git config --global user.email "actions@github.com"
-        git tag -a "v${{ env.GITHUB_STATE.version }}" -m "Release v${{ env.GITHUB_STATE.version }}"
-        git push origin "v${{ env.GITHUB_STATE.version }}"
+        git tag -a "v${{ env.version }}" -m "Release v${{ env.version }}"
+        git push origin "v${{ env.version }}"
         
