@@ -4,7 +4,7 @@ jobs:
   first-job:
     runs-on: ubuntu-latest
     steps:
-      - name: Print greeting
-        run: echo "Hello World"
-      - name: Print goodbye
-        run: echo "Goodbye"
+        git fetch --tags
+        git show-ref --tags --quiet --verify "refs/tags/${{ env.version }}" >> tag_exists
+        echo "tag_exists=$tag_exists" >> "$GITHUB_ENV"
+
