@@ -1,3 +1,3 @@
 function foo
-disp("Hello World");
+disp("Hello");
 end
