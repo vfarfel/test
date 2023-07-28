@@ -4,7 +4,8 @@ jobs:
   first-job:
     runs-on: ubuntu-latest
     steps:
-        git fetch --tags
+        version="1.5.7"
         git show-ref --tags --quiet --verify "refs/tags/${{ env.version }}" >> tag_exists
         echo "tag_exists=$tag_exists" >> "$GITHUB_ENV"
+        
 
