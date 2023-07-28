@@ -4,8 +4,12 @@ jobs:
   first-job:
     runs-on: ubuntu-latest
     steps:
-        version="1.5.7"
+    - name: Check if current version has a tag already
+      id: check_tag
+      run: |
+        version=$(grep -o '"version": "[^"]*"' mpackage.json | cut -d'"' -f4)
         git show-ref --tags --quiet --verify "refs/tags/${{ env.version }}" >> tag_exists
         echo "tag_exists=$tag_exists" >> "$GITHUB_ENV"
+
         
 
