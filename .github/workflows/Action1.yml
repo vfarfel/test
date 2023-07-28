@@ -11,7 +11,8 @@ jobs:
       id: check_tag
       run: |
         version=$(grep -o '"version": "[^"]*"' mpackage.json | cut -d'"' -f4)
-        git show-ref --tags --quiet --verify "refs/tags/${{ env.version }}" >> tag_exists
+        git fetch --tags
+        tag_exists = $(git show-ref --tags --quiet --verify "refs/tags/${{ env.version }}")
         echo "tag_exists=$tag_exists" >> "$GITHUB_ENV"
 
         
